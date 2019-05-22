@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">Smartspace for Admin</string>
+    <string name="app_name">Smartspace Admin</string>
+    <string name="mail">Mail</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="please_wait_login">Please wait...\nTry to login</string>
+    <string name="empty_field">Mail or password can\'t be empty</string>
 </resources>
