@@ -6,7 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.integration.smartspace.Login.LoginActivity;
-
+/**
+ * Created by liadkh on 5/22/19.
+ */
 public class MainActivity extends AppCompatActivity {
 
     final int SPLASH_TIME_OUT = 1500;

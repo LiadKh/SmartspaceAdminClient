@@ -1,8 +1,10 @@
 package com.integration.smartspace.Environment;
 
+/**
+ * Created by liadkh on 5/22/19.
+ */
 public interface Preferences {
 
-    String USER_NAME = "username";
-    String USER_PASSWORD = "userpassword";
-    String USER_PASSWORD_xml = "my_user_prefs.xml";
+    String USER_MAIL = "usermail";
+    String USER_SMARTSPACE = "usersmartspace";
 }
