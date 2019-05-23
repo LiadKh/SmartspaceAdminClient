@@ -1,11 +1,12 @@
 package com.integration.smartspace.Layout;
 
+import java.io.Serializable;
 import java.util.Map;
 
 /**
  * Created by liadkh on 5/22/19.
  */
-public class UserBoundary {
+public class UserBoundary implements Serializable {
     private Map<String, String> key;
     private UserRole role;
     private String username;

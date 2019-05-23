@@ -83,13 +83,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 try {
                                     userBoundary = mapper.readValue(response, UserBoundary.class);
                                 } catch (IOException e) {
-                                    Toast.makeText(LoginActivity.this, R.string.angain_later, Toast.LENGTH_LONG).show();
+                                    Toast.makeText(LoginActivity.this, R.string.again_later, Toast.LENGTH_LONG).show();
                                     return;
                                 }
 
                                 if (userBoundary != null && userBoundary.getRole() == UserRole.ADMIN) {
                                     savePreference(adminSmartspace, adminEmail);
                                     Intent intent = new Intent(getApplicationContext(), AdminActivity.class);
+                                    intent.putExtra(AdminActivity.USER_BOUNDARY, userBoundary);
                                     startActivity(intent);
                                     overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                                     finish();
@@ -109,7 +110,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(LoginActivity.this, R.string.angain_later, Toast.LENGTH_LONG).show();
+                                Toast.makeText(LoginActivity.this, R.string.again_later, Toast.LENGTH_LONG).show();
                                 mProgressDialog.cancel();
                             }
                         });
