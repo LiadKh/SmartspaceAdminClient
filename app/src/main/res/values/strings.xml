@@ -18,10 +18,11 @@
     <string name="elements">Elements</string>
     <string name="actions">Actions</string>
     <string name="empty_data">The data is empty</string>
-    <string name="read_permission">The app need permission to read profile image from the phone</string>
+    <string name="read_permission">The app need permission to read in order to find your import file from the phone</string>
     <string name="storage_access">Storage access</string>
     <string name="cancel">Cancel</string>
     <string name="ok">OK</string>
     <string name="import_succeed">Import has succeed</string>
     <string name="export_data_file">Export</string>
+    <string name="again_later_and_recheck">Plase try again later or check your file is valid</string>
 </resources>

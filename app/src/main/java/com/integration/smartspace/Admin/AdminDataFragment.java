@@ -6,8 +6,10 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -20,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -29,9 +32,15 @@ import com.android.volley.toolbox.Volley;
 import com.integration.smartspace.Environment.Environment;
 import com.integration.smartspace.R;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -54,7 +63,6 @@ public class AdminDataFragment extends Fragment implements Environment {
     private FuncTypeEnum mFuncTypeEnum;
     private DataTypeEnum mExportDataTypeEnum;
     private String mSmartspace, mMail, mPath;
-    private Uri mFilePath;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -91,9 +99,10 @@ public class AdminDataFragment extends Fragment implements Environment {
         return view;
     }
 
-    private void importData() {
+    private void importData(final Uri filePath) {
         mProgressDialog.setMessage(getString(R.string.import_data));
         mProgressDialog.show();
+
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -116,12 +125,12 @@ public class AdminDataFragment extends Fragment implements Environment {
                         },
                         new Response.ErrorListener() {
                             @Override
-                            public void onErrorResponse(VolleyError error) {
+                            public void onErrorResponse(final VolleyError error) {
                                 // error
                                 getActivity().runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        Toast.makeText(getContext(), R.string.again_later, Toast.LENGTH_LONG).show();
+                                        Toast.makeText(getContext(), R.string.again_later_and_recheck, Toast.LENGTH_LONG).show();
                                         mProgressDialog.cancel();
                                     }
                                 });
@@ -129,12 +138,18 @@ public class AdminDataFragment extends Fragment implements Environment {
                         }
                 ) {
                     @Override
-                    protected Map<String, String> getParams() {
-                        Map<String, String> params = new HashMap<String, String>();
-                        params.put("name", "Alif");
-                        params.put("domain", "http://itsalif.info");
+                    public byte[] getBody() throws AuthFailureError {
+                        try {
+                            byte[] a = readTextFromUri(filePath).getBytes();
+                            return a;
+                        } catch (Exception e) {
+                            throw new AuthFailureError(e.getMessage());
+                        }
+                    }
 
-                        return params;
+                    @Override
+                    public String getBodyContentType() {
+                        return "application/json";
                     }
                 };
                 queue.add(postRequest);
@@ -158,11 +173,11 @@ public class AdminDataFragment extends Fragment implements Environment {
                             @Override
                             public void onResponse(String response) {
                                 if (response != null && !response.isEmpty()) {
-                                    File cacheFile2 = new File(getContext().getCacheDir(), "data");
-                                    if (!cacheFile2.exists()) {
-                                        cacheFile2.mkdirs();
+                                    File cacheFolder = new File(getContext().getCacheDir(), "data");
+                                    if (!cacheFolder.exists()) {
+                                        cacheFolder.mkdirs();
                                     }
-                                    File cacheFile = new File(getContext().getCacheDir(), "data/" + getContext().getString(R.string.export_data_file) + "-" + mExportDataTypeEnum.name() + "-" + System.currentTimeMillis() + ".json");
+                                    File cacheFile = new File(cacheFolder, getContext().getString(R.string.export_data_file) + "-" + mExportDataTypeEnum.name() + "-" + System.currentTimeMillis() + ".txt");
                                     try {
                                         FileWriter writer = new FileWriter(cacheFile);
                                         writer.append(response);
@@ -180,7 +195,7 @@ public class AdminDataFragment extends Fragment implements Environment {
                                     }
                                     Uri uri = FileProvider.getUriForFile(getContext(), "com.integration.smartspace.provider", cacheFile);
                                     Intent intent = ShareCompat.IntentBuilder.from(getActivity())
-                                            .setType("application/json")
+                                            .setType("text/*")
                                             .setStream(uri)
                                             .createChooserIntent()
                                             .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
@@ -239,6 +254,7 @@ public class AdminDataFragment extends Fragment implements Environment {
         return dataTypeUrl;
     }
 
+
     private void play(DataTypeEnum dataTypeEnum) {
         mExportDataTypeEnum = dataTypeEnum;
         mPath = checkType(dataTypeEnum);
@@ -256,12 +272,31 @@ public class AdminDataFragment extends Fragment implements Environment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {//File has been chosen
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_FILE_REQUSET && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            mFilePath = data.getData();
-            importData();
+            importData(data.getData());
         }
     }
 
+
+    private String readTextFromUri(Uri uri) throws IOException {
+        InputStream inputStream = getContext().getContentResolver().openInputStream(uri);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(
+                inputStream));
+        StringBuilder stringBuilder = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            stringBuilder.append(line);
+        }
+        return stringBuilder.toString();
+    }
+
     private void chooseFile() {
+
+//        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+//        intent.addCategory(Intent.CATEGORY_OPENABLE);
+//        intent.setType("text/plain");
+//        startActivityForResult(intent, PICK_FILE_REQUSET);
+
+
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
             new AlertDialog.Builder(getContext(), R.style.AlertDialogTheme).setTitle(R.string.storage_access)

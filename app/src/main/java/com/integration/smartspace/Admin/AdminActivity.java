@@ -146,7 +146,8 @@ public class AdminActivity extends AppCompatActivity implements Environment {
         transaction.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out, android.R.animator.fade_in, android.R.animator.fade_out);
         Bundle bundle = new Bundle();
         bundle.putSerializable(AdminDataFragment.TYPE, FuncTypeEnum.IMPORT_DATA);
-        bundle.putSerializable(USER_BOUNDARY, mUserBoundary);
+        bundle.putString(AdminDataFragment.SMARTSPACE, mSmartspace);
+        bundle.putSerializable(AdminDataFragment.MAIL, mMail);
         newFragment.setArguments(bundle);
         // Replace whatever is in the fragment_container view with this fragment,
         // and add the transaction to the back stack
