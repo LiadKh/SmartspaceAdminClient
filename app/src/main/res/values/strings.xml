@@ -9,7 +9,7 @@
     <string name="again_later">Please try again later</string>
     <string name="import_data">Import data</string>
     <string name="export_data">Export data</string>
-    <string name="points">Points:</string>
+    <string name="points">Points: </string>
     <string name="logout">Logout</string>
     <string name="please_wait">Please wait</string>
     <string name="users">Users</string>
