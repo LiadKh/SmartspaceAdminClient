@@ -10,9 +10,7 @@
     <string name="import_data">Import data</string>
     <string name="export_data">Export data</string>
     <string name="points">Points:</string>
-    <string name="image_set_problem">There is problem to set your profile image</string>
     <string name="logout">Logout</string>
-    <string name="send_to">Export data from smartspace</string>
     <string name="please_wait">Please wait</string>
     <string name="users">Users</string>
     <string name="elements">Elements</string>
@@ -25,4 +23,7 @@
     <string name="import_succeed">Import has succeed</string>
     <string name="export_data_file">Export</string>
     <string name="again_later_and_recheck">Plase try again later or check your file is valid</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="confirm_logout">Are you sure?</string>
 </resources>

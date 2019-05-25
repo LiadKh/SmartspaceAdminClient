@@ -80,78 +80,11 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
-    <LinearLayout
+    <FrameLayout
         android:id="@+id/tools_admin"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="6"
-        android:weightSum="6"
-        android:orientation="vertical">
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="6"
-            android:orientation="vertical"
-            android:weightSum="6">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="2"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/import_button"
-                    android:layout_width="200dp"
-                    android:layout_height="60dp"
-                    android:layout_gravity="center"
-                    android:layout_margin="16dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/button_import_style"
-                    android:text="@string/import_data"
-                    android:textAllCaps="false"
-                    android:textColor="@android:color/white"
-                    android:textSize="20sp" />
-
-
-                <Button
-                    android:id="@+id/export_button"
-                    android:layout_width="200dp"
-                    android:layout_height="60dp"
-                    android:layout_gravity="center"
-                    android:layout_margin="16dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/button_export_style"
-                    android:text="@string/export_data"
-                    android:textAllCaps="false"
-                    android:textColor="@android:color/white"
-                    android:textSize="20sp" />
-
-
-            </LinearLayout>
-
-
-            <android.support.v4.widget.Space
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1.5" />
-
-            <Button
-                android:id="@+id/logout_button"
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="16dp"
-                android:layout_weight="0.2"
-                android:background="@drawable/button_style"
-                android:text="@string/logout"
-                android:textColor="@android:color/white"
-                android:textSize="18sp" />
-
-        </LinearLayout>
-    </LinearLayout>
+        android:layout_weight="6" />
 
 
 </LinearLayout>

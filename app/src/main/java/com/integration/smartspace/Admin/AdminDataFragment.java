@@ -57,8 +57,7 @@ public class AdminDataFragment extends Fragment implements Environment {
     private static final int PICK_FILE_REQUSET = 1;
 
     final static String TYPE = "type";
-    public static final String SMARTSPACE = "smartspace";
-    public static final String MAIL = "mail";
+
     private ProgressDialog mProgressDialog;
     private FuncTypeEnum mFuncTypeEnum;
     private DataTypeEnum mExportDataTypeEnum;
@@ -75,8 +74,8 @@ public class AdminDataFragment extends Fragment implements Environment {
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             mFuncTypeEnum = (FuncTypeEnum) bundle.getSerializable(TYPE);
-            mSmartspace = bundle.getString(SMARTSPACE);
-            mMail = bundle.getString(MAIL);
+            mSmartspace = bundle.getString(AdminActivity.SMARTSPACE_KEY);
+            mMail = bundle.getString(AdminActivity.MAIL_KEY);
         }
         view.findViewById(R.id.users_button).setOnClickListener(new View.OnClickListener() {
             @Override

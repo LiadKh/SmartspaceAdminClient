@@ -29,20 +29,16 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class AdminActivity extends AppCompatActivity implements Environment {
 
     public static final String USER_BOUNDARY = "userBoundary";
-    public final String SMARTSPACE_KEY = "smartspace";
-    public final String MAIL_KEY = "email";
+    public static final String SMARTSPACE_KEY = "smartspace";
+    public static final String MAIL_KEY = "email";
 
     private String mSmartspace, mMail;
-    private ProgressDialog mProgressDialog;
     private UserBoundary mUserBoundary;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
-        mProgressDialog = new ProgressDialog(this, R.style.ProgressDialogTheme);
-        mProgressDialog.setTitle(R.string.please_wait);
-        mProgressDialog.setCancelable(false);
         mUserBoundary = (UserBoundary) getIntent().getSerializableExtra(USER_BOUNDARY);
         if (mUserBoundary != null) {
 
@@ -67,31 +63,25 @@ public class AdminActivity extends AppCompatActivity implements Environment {
             }
 
             if (mUserBoundary.getPoints() != null) {
-                ((TextView) findViewById(R.id.pointsText)).setText(new String(getString(R.string.points) + mUserBoundary.getPoints()));
+                ((TextView) findViewById(R.id.pointsText)).setText(getString(R.string.points) + mUserBoundary.getPoints());
             } else {
-                ((TextView) findViewById(R.id.pointsText)).setText(new String(getString(R.string.points) + 0));
+                ((TextView) findViewById(R.id.pointsText)).setText(getString(R.string.points) + 0);
             }
 
-            findViewById(R.id.import_button).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    importData();
-                }
-            });
+            Fragment newFragment = new AdminMenuFragment();
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out, android.R.animator.fade_in, android.R.animator.fade_out);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(AdminDataFragment.TYPE, Environment.FuncTypeEnum.IMPORT_DATA);
+            bundle.putString(SMARTSPACE_KEY, mSmartspace);
+            bundle.putSerializable(MAIL_KEY, mMail);
+            newFragment.setArguments(bundle);
+            // Replace whatever is in the fragment_container view with this fragment,
+            // and add the transaction to the back stack
+            transaction.replace(R.id.tools_admin, newFragment);
 
-            findViewById(R.id.export_button).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    exportData();
-                }
-            });
-
-            findViewById(R.id.logout_button).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    logout();
-                }
-            });
+            // Commit the transaction
+            transaction.commit();
         } else {
             SharedPreferences prefs = new SecurePreferences(this);
             SharedPreferences.Editor editor = prefs.edit();
@@ -102,59 +92,5 @@ public class AdminActivity extends AppCompatActivity implements Environment {
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             finish();
         }
-    }
-
-    private void logout() {
-        mProgressDialog.setMessage(getString(R.string.logout));
-        mProgressDialog.show();
-        SharedPreferences prefs = new SecurePreferences(this);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.clear();
-        editor.apply();
-        Intent intent = new Intent(this, MainActivity.class);
-        mProgressDialog.cancel();
-        startActivity(intent);
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-        finish();
-
-    }
-
-    private void exportData() {
-
-        // Create new fragment and transaction
-        Fragment newFragment = new AdminDataFragment();
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out, android.R.animator.fade_in, android.R.animator.fade_out);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(AdminDataFragment.TYPE, FuncTypeEnum.EXPORT_DATA);
-        bundle.putString(AdminDataFragment.SMARTSPACE, mSmartspace);
-        bundle.putString(AdminDataFragment.MAIL, mMail);
-        newFragment.setArguments(bundle);
-        // Replace whatever is in the fragment_container view with this fragment,
-        // and add the transaction to the back stack
-        transaction.replace(R.id.tools_admin, newFragment);
-        transaction.addToBackStack(null);
-
-        // Commit the transaction
-        transaction.commit();
-    }
-
-    private void importData() {
-        // Create new fragment and transaction
-        Fragment newFragment = new AdminDataFragment();
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out, android.R.animator.fade_in, android.R.animator.fade_out);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(AdminDataFragment.TYPE, FuncTypeEnum.IMPORT_DATA);
-        bundle.putString(AdminDataFragment.SMARTSPACE, mSmartspace);
-        bundle.putSerializable(AdminDataFragment.MAIL, mMail);
-        newFragment.setArguments(bundle);
-        // Replace whatever is in the fragment_container view with this fragment,
-        // and add the transaction to the back stack
-        transaction.replace(R.id.tools_admin, newFragment);
-        transaction.addToBackStack(null);
-
-        // Commit the transaction
-        transaction.commit();
     }
 }
