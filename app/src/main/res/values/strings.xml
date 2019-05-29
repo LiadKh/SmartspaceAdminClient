@@ -4,7 +4,7 @@
     <string name="smartspcae">Smartspcae</string>
     <string name="login">Login</string>
     <string name="please_wait_login">Please wait...\nTry to login</string>
-    <string name="empty_field">Mail or password can\'t be empty</string>
+    <string name="empty_field">One or more fields is empty</string>
     <string name="not_admin">You aren\'t admin in this smartspace</string>
     <string name="again_later">Please try again later</string>
     <string name="import_data">Import data</string>
@@ -26,4 +26,6 @@
     <string name="no">No</string>
     <string name="yes">Yes</string>
     <string name="confirm_logout">Are you sure?</string>
+    <string name="ip_str">IP address</string>
+    <string name="port_str">Port</string>
 </resources>

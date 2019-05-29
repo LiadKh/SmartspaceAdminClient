@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -18,7 +17,6 @@ import com.integration.smartspace.Admin.AdminActivity;
 import com.integration.smartspace.Environment.Environment;
 import com.integration.smartspace.Environment.Preferences;
 import com.integration.smartspace.Layout.UserBoundary;
-import com.integration.smartspace.Layout.UserRole;
 import com.integration.smartspace.Login.LoginActivity;
 import com.securepreferences.SecurePreferences;
 
@@ -47,9 +45,10 @@ public class MainActivity extends AppCompatActivity implements Preferences, Envi
         SharedPreferences prefs = new SecurePreferences(this);
         String smartspace = prefs.getString(USER_SMARTSPACE, null);
         String mail = prefs.getString(USER_MAIL, null);
-        if (smartspace != null && mail != null) {
+        final String baseURL = prefs.getString(BASE_URL, null);
+        if (smartspace != null && mail != null && baseURL != null) {
 
-            final String url = BASE_URL + LOGIN + "/" + smartspace + "/" + mail;
+            final String url = baseURL + LOGIN + "/" + smartspace + "/" + mail;
 
             new Thread(new Runnable() {
                 @Override
@@ -70,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements Preferences, Envi
                                         userBoundary = mapper.readValue(response, UserBoundary.class);
                                         Intent intent = new Intent(getBaseContext(), AdminActivity.class);
                                         intent.putExtra(AdminActivity.USER_BOUNDARY, userBoundary);
+                                        intent.putExtra(BASE_URL, baseURL);
                                         startActivity(intent);
                                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                                         finish();

@@ -6,41 +6,74 @@
     android:layout_height="match_parent"
     android:background="@android:color/white">
 
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline_center_login"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:gravity="center"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.5" />
+        app:layout_constraintBottom_toTopOf="@+id/smartspcae_login">
 
+
+        <EditText
+            android:id="@+id/ipNum"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/edit_text_style"
+            android:ems="10"
+            android:hint="@string/ip_str"
+            android:inputType="text" />
+
+
+        <EditText
+            android:id="@+id/portNum"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/edit_text_style"
+            android:ems="10"
+            android:hint="@string/port_str"
+            android:inputType="number" />
+
+    </LinearLayout>
     <EditText
         android:id="@+id/smartspcae_login"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/edit_text_style"
         android:ems="10"
         android:hint="@string/smartspcae"
         android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/guideline_center_login"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/mail_login"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
         android:background="@drawable/edit_text_style"
         android:ems="10"
         android:hint="@string/mail"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline_center_login" />
+        app:layout_constraintTop_toBottomOf="@+id/smartspcae_login" />
 
 
     <Button
@@ -58,6 +91,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -69,7 +103,7 @@
         android:textColor="@color/colorAccent"
         android:textSize="46sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/mail_login"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

@@ -6,17 +6,14 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ShareCompat;
 import android.support.v4.content.FileProvider;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,15 +31,10 @@ import com.integration.smartspace.R;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.HashMap;
-import java.util.Map;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -62,6 +54,7 @@ public class AdminDataFragment extends Fragment implements Environment {
     private FuncTypeEnum mFuncTypeEnum;
     private DataTypeEnum mExportDataTypeEnum;
     private String mSmartspace, mMail, mPath;
+    private String mBaseURL;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -76,6 +69,7 @@ public class AdminDataFragment extends Fragment implements Environment {
             mFuncTypeEnum = (FuncTypeEnum) bundle.getSerializable(TYPE);
             mSmartspace = bundle.getString(AdminActivity.SMARTSPACE_KEY);
             mMail = bundle.getString(AdminActivity.MAIL_KEY);
+            mBaseURL = bundle.getString(BASE_URL);
         }
         view.findViewById(R.id.users_button).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,7 +99,7 @@ public class AdminDataFragment extends Fragment implements Environment {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String url = BASE_URL + mPath + "/" + mSmartspace + "/" + mMail;
+                String url = mBaseURL + mPath + "/" + mSmartspace + "/" + mMail;
                 RequestQueue queue = Volley.newRequestQueue(getContext());
 
 
@@ -163,7 +157,7 @@ public class AdminDataFragment extends Fragment implements Environment {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String url = BASE_URL + mPath + "/" + mSmartspace + "/" + mMail;
+                String url = mBaseURL + mPath + "/" + mSmartspace + "/" + mMail;
                 RequestQueue queue = Volley.newRequestQueue(getContext());
 
                 // Request a string response from the provided URL.

@@ -22,8 +22,7 @@ import com.securepreferences.SecurePreferences;
 
 public class AdminMenuFragment extends Fragment {
 
-    private String mSmartspace;
-    private String mMail;
+    private String mSmartspace, mMail, mBaseUrl;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -34,6 +33,7 @@ public class AdminMenuFragment extends Fragment {
         if (bundle != null) {
             mSmartspace = bundle.getString(AdminActivity.SMARTSPACE_KEY);
             mMail = bundle.getString(AdminActivity.MAIL_KEY);
+            mBaseUrl = bundle.getString(Environment.BASE_URL);
         }
         view.findViewById(R.id.import_button).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,6 +94,7 @@ public class AdminMenuFragment extends Fragment {
         bundle.putSerializable(AdminDataFragment.TYPE, Environment.FuncTypeEnum.EXPORT_DATA);
         bundle.putString(AdminActivity.SMARTSPACE_KEY, mSmartspace);
         bundle.putString(AdminActivity.MAIL_KEY, mMail);
+        bundle.putString(Environment.BASE_URL, mBaseUrl);
         newFragment.setArguments(bundle);
         // Replace whatever is in the fragment_container view with this fragment,
         // and add the transaction to the back stack
@@ -113,6 +114,7 @@ public class AdminMenuFragment extends Fragment {
         bundle.putSerializable(AdminDataFragment.TYPE, Environment.FuncTypeEnum.IMPORT_DATA);
         bundle.putString(AdminActivity.SMARTSPACE_KEY, mSmartspace);
         bundle.putString(AdminActivity.MAIL_KEY, mMail);
+        bundle.putString(Environment.BASE_URL, mBaseUrl);
         newFragment.setArguments(bundle);
         // Replace whatever is in the fragment_container view with this fragment,
         // and add the transaction to the back stack

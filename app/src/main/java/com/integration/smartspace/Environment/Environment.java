@@ -5,7 +5,7 @@ package com.integration.smartspace.Environment;
  */
 public interface Environment {
 
-    String BASE_URL = "http://192.168.43.10:8080";
+    String BASE_URL = "BaseURL";
     String LOGIN = "/smartspace/users/login";
     String ACTIONS = "/smartspace/admin/actions";
     String USERS = "/smartspace/admin/users";

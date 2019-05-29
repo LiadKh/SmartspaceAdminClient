@@ -1,13 +1,11 @@
 package com.integration.smartspace.Admin;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.webkit.URLUtil;
 import android.widget.TextView;
 
@@ -15,7 +13,6 @@ import com.bumptech.glide.Glide;
 import com.integration.smartspace.Environment.Environment;
 import com.integration.smartspace.Layout.UserBoundary;
 import com.integration.smartspace.Login.LoginActivity;
-import com.integration.smartspace.MainActivity;
 import com.integration.smartspace.R;
 import com.securepreferences.SecurePreferences;
 
@@ -32,7 +29,7 @@ public class AdminActivity extends AppCompatActivity implements Environment {
     public static final String SMARTSPACE_KEY = "smartspace";
     public static final String MAIL_KEY = "email";
 
-    private String mSmartspace, mMail;
+    private String mSmartspace, mMail, mBaseURL;
     private UserBoundary mUserBoundary;
 
     @Override
@@ -40,7 +37,8 @@ public class AdminActivity extends AppCompatActivity implements Environment {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
         mUserBoundary = (UserBoundary) getIntent().getSerializableExtra(USER_BOUNDARY);
-        if (mUserBoundary != null) {
+        mBaseURL = getIntent().getStringExtra(BASE_URL);
+        if (mUserBoundary != null && mBaseURL != null) {
 
             if (mUserBoundary.getKey() != null) {
                 Map key = mUserBoundary.getKey();
@@ -74,7 +72,9 @@ public class AdminActivity extends AppCompatActivity implements Environment {
             Bundle bundle = new Bundle();
             bundle.putSerializable(AdminDataFragment.TYPE, Environment.FuncTypeEnum.IMPORT_DATA);
             bundle.putString(SMARTSPACE_KEY, mSmartspace);
-            bundle.putSerializable(MAIL_KEY, mMail);
+            bundle.putString(MAIL_KEY, mMail);
+            bundle.putString(MAIL_KEY, mMail);
+            bundle.putString(BASE_URL, mBaseURL);
             newFragment.setArguments(bundle);
             // Replace whatever is in the fragment_container view with this fragment,
             // and add the transaction to the back stack
